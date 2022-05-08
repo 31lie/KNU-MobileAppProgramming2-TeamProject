@@ -3,7 +3,7 @@
 //  BuStop
 //
 //  Created by 이윤서 on 2022/05/08.
-//
+//  MobileAppProgramming2 Swift TeamProject
 
 import SwiftUI
 
