@@ -7,7 +7,7 @@
 
 
 // geun check
-
+// bin check
 import SwiftUI
 
 struct ContentView: View {
