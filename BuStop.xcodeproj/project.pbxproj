@@ -11,6 +11,8 @@
 		0DDCB4BF28277DFA008D3B2F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDCB4BE28277DFA008D3B2F /* ContentView.swift */; };
 		0DDCB4C128277DFC008D3B2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DDCB4C028277DFC008D3B2F /* Assets.xcassets */; };
 		0DDCB4C428277DFC008D3B2F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DDCB4C328277DFC008D3B2F /* Preview Assets.xcassets */; };
+		6655FC47283C8DF30048D506 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6655FC46283C8DF30048D506 /* NotificationManager.swift */; };
+		6655FC49283C8E260048D506 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6655FC48283C8E260048D506 /* SpeechService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		0DDCB4C028277DFC008D3B2F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0DDCB4C328277DFC008D3B2F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0DDCB4C528277DFC008D3B2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6655FC46283C8DF30048D506 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		6655FC48283C8E260048D506 /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			children = (
 				0DDCB4BC28277DFA008D3B2F /* BuStopApp.swift */,
 				0DDCB4BE28277DFA008D3B2F /* ContentView.swift */,
+				6655FC46283C8DF30048D506 /* NotificationManager.swift */,
+				6655FC48283C8E260048D506 /* SpeechService.swift */,
 				0DDCB4C028277DFC008D3B2F /* Assets.xcassets */,
 				0DDCB4C528277DFC008D3B2F /* Info.plist */,
 				0DDCB4C228277DFC008D3B2F /* Preview Content */,
@@ -138,8 +144,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6655FC47283C8DF30048D506 /* NotificationManager.swift in Sources */,
 				0DDCB4BF28277DFA008D3B2F /* ContentView.swift in Sources */,
 				0DDCB4BD28277DFA008D3B2F /* BuStopApp.swift in Sources */,
+				6655FC49283C8E260048D506 /* SpeechService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

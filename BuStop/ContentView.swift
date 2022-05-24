@@ -11,9 +11,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject private var notiManager = NotificationManager()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+       
+       Button("Alarm"){
+           print("Press")
+           notiManager.requestNotificationAuthorization()
+           notiManager.sendNotification(seconds: 1, place: "ulsan")
+       }
+       
     }
 }
 
