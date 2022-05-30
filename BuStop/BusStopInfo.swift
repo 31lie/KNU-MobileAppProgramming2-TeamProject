@@ -29,6 +29,8 @@ public class BusStopInfo{
     var busNum:[String] = []        //해당 정류장 정차버스 수
     var busList:[[String]] = [[]]   //해당 정류장 버스 종류
     var sizeOfArray = 0             //총 배열의 크기
+    let currentLocation: LocationInfo = LocationInfo()
+    
     
     var busIndex = [String: Int]()  //key: 정류장 이름, value: 정류장에 해당하는 index. 위 배열에 사용
     
@@ -57,23 +59,26 @@ public class BusStopInfo{
             busIndex[row[2]] = sizeOfArray
             sizeOfArray += 1
         }
+        
+        currentLocation.viewDidLoad()
     }
     
     //inMeter내의 주변 버스정류장 찾기 함수
-    func FindBusStop(_ inMeter: CLLocationDistance) -> [String]{
-        let currentLocation: LocationInfo = LocationInfo()
+    func FindBusStop(_ inMeter: CLLocationDistance) -> [String]?{
         var bsLongtitue: Double
         var bsLatitude: Double
         var distance: CLLocationDistance
         var listOfBusStop: [String] = []
         
-        currentLocation.viewDidLoad()
-        
+        self.currentLocation.viewDidLoad()
+        if currentLocation.latitude == nil || currentLocation.longitude == nil{
+            return nil
+        }
         
         for i in 1..<self.sizeOfArray{
             bsLongtitue = Double(self.longitude[i])!
             bsLatitude = Double(self.latitude[i])!
-            distance = currentLocation.distance(latitude: bsLatitude, longitude: bsLongtitue)
+            distance = self.currentLocation.distance(latitude: bsLatitude, longitude: bsLongtitue)!
             if distance <= inMeter{
                 listOfBusStop.append(self.name[i])
             }

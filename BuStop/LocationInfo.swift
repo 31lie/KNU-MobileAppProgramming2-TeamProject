@@ -17,6 +17,7 @@ class LocationInfo: UIViewController, CLLocationManagerDelegate {
     //위도와 경도
     var latitude: Double?   //위도
     var longitude: Double?  //경도
+    
   
     //latitude와 longitude의 위치정보 업데이트 함수
     override func viewDidLoad() {
@@ -48,7 +49,11 @@ class LocationInfo: UIViewController, CLLocationManagerDelegate {
 
 extension LocationInfo{
     //위치정보간의 거리 구하기 함수
-    func distance(latitude: Double, longitude: Double) -> CLLocationDistance{
+    func distance(latitude: Double, longitude: Double) -> CLLocationDistance?{
+        if self.latitude == nil || self.longitude == nil{
+            return nil
+        }
+        
         let from = CLLocation(latitude: latitude, longitude: longitude)
         let to = CLLocation(latitude: self.latitude!, longitude: self.longitude!)
         //거리 return(meters)
