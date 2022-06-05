@@ -78,7 +78,7 @@ public class BusStopInfo{
         for i in 1..<self.sizeOfArray{
             bsLongtitue = Double(self.longitude[i])!
             bsLatitude = Double(self.latitude[i])!
-            distance = self.currentLocation.distance(latitude: bsLatitude, longitude: bsLongtitue)!
+            distance = self.currentLocation.distance(latitude: bsLatitude, longitude: bsLongtitue)
             if distance <= inMeter{
                 listOfBusStop.append(self.name[i])
             }
@@ -87,6 +87,5 @@ public class BusStopInfo{
         return listOfBusStop
     }
 }
-
 
 
