@@ -2,8 +2,8 @@
 //  BuStopApp.swift
 //  BuStop
 //
-//  Created by 이윤서 on 2022/05/08.
-//
+//  MobileAppProgramming2 Swift TeamProject
+//  Team2 : 이윤서, 최명빈, 김동근, 박휘성
 
 import SwiftUI
 
@@ -11,7 +11,7 @@ import SwiftUI
 struct BuStopApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StartView()
         }
     }
 }
