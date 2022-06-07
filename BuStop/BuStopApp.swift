@@ -11,7 +11,9 @@ import SwiftUI
 struct BuStopApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            var busStop = BusStopInfo(filePath: "/Users/hwistarrrrr/Desktop/11.txt")
+            var busStopList: [String]? = busStop.FindBusStop(200)
+            ContentView(busStop: busStop, busStopList: busStopList)
         }
     }
 }
