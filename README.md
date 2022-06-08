@@ -26,6 +26,13 @@
 - Swift
 - XCode
 
+## 공공데이터 이용
+- 정류소 위치정보: 
+https://www.data.go.kr/tcs/dss/selectFileDataDetailView.do?publicDataPk=15050946
+- 버스 노선 정보:
+http://data.daegu.go.kr/open/data/dataView.do?dataSetId=15060936&dataSetDetailId=150609361ccb7e0f67ddb&provdMethod=FILE
+
+
 ## 협업 내용
 - Front - **(이윤서)**
 - 현재 위치 → 근처 정류장 **(김동근)**
