@@ -12,13 +12,17 @@ import SwiftUI
 
 struct ContentView: View {
     @State var numOfStop: String = ""
+    @State var numOfBus: String = ""
+    @State var busList : [String]? = []
+    @State var stopList : [String]? = []
     var body: some View {
         //버튼 클릭시 버스정류장 정보 불러온 후 현재위치 n미터 이내 정류장이름을 String배열로 불러옮. 그리고 console에 출력
 
-        let busstop = BusStopInfo(filePath: "/Users/choemyeongbin/Desktop/input.csv")
-        let busstop1 = BusInfo(filePath: "/Users/choemyeongbin/Desktop/input.csv")
+        let busstop = BusStopInfo(filePath: "/Users/choemyeongbin/Desktop/busStops.csv")
+        let busstop1 = BusInfo(filePath: "/Users/choemyeongbin/Desktop/busStops.csv")
+        let buses = CheckDest(filePath: "/Users/choemyeongbin/Desktop/busRoute.csv")
         let listOfBusStop: [String]? = busstop.FindBusStop(100)
-        Button {    // nil처리 수정
+        Button {
             if let checkListOfBusStop = listOfBusStop{
                 for i in 0..<checkListOfBusStop.count{
                     print("list \(i): ",checkListOfBusStop[i])
@@ -33,7 +37,7 @@ struct ContentView: View {
                 .textFieldStyle(.roundedBorder)
             
             Button{
-                let busList : [String]? = busstop1.FindBusInfo(from: listOfBusStop!, at: Int(numOfStop)!)
+                busList = busstop1.FindBusInfo(from: listOfBusStop!, at: Int(numOfStop)!)
                 print("선택한 정류장을 경유하는 버스")
                 if let checkBusList = busList{
                     for i in 0..<checkBusList.count{
@@ -46,6 +50,32 @@ struct ContentView: View {
                 .padding()
             
         }
+        HStack{
+            TextField("버스 번호 입력", text: $numOfBus)
+                .textFieldStyle(.roundedBorder)
+            
+            Button{
+                
+                
+                let selectedBus: String? = busList?[Int(numOfBus)!]
+                if let checkSelectedBus = selectedBus{
+                    print("선택한 버스: \(checkSelectedBus)")
+                }
+                stopList = buses.FindDest(from: busList!, at: Int(numOfBus)!)
+                print("선택한 버스의 노선")
+                if let checkStopList = stopList{
+                    for i in 0..<checkStopList.count{
+                        print("노선list \(i):",checkStopList[i])
+                    }
+                }
+                
+            } label: {
+                Text("버스선택")
+            } .buttonStyle(.borderless)
+                .padding()
+            
+        }
+        
     }
 }
 

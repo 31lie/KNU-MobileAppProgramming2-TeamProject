@@ -12,7 +12,7 @@ import CSV
 class BusInfo{
 //    var busStop: String?        // 정류장
     var numOfBuses: Int?        // 경유하는 버스 개수
-    var buses: [String]?        // 경유하는 버스 리스트
+    var busStops: [String]?        // 경유하는 버스 리스트
     
     // csv파일에서 가져올 값 정류소아이디[0],모바일아이디[1],정류소명[2],영문명[3],시도[4],구군[5],동[6],경도[7],위도[8],경유노선수[9],경유노선[10]
     var name:[String] = []          //정류장 이름
@@ -50,23 +50,17 @@ class BusInfo{
     
     func FindBusInfo(from busStops: [String], at idx:Int) -> [String]?{
 //        self.numOfBuses = busStops.count    //주변 정류장 개수
-        self.buses = busStops               //주변 정류장 배열
+        self.busStops = busStops               //주변 정류장 배열
         var selectedBusStop: String? = ""
         var row = 0
         //주변 정류장 배열과 idx로 선택한 정류장 찾기
-        selectedBusStop = self.buses?[idx]
+        selectedBusStop = self.busStops?[idx]
         
         // csv에서 선택한 정류장 이름으로 해당 row 찾기
         if let selectedIdx = busIndex[selectedBusStop!]{
             row = selectedIdx
         }
-        
-        // 해당 row에서 정차하는 버스의 수, 버스종류 찾기
-        print("버스의 수: \(self.busNum[row])")
-        print("버스의 종류: ")
-        for i in 0..<self.busNum[row]{
-            print(self.busList[row][i])
-        }
+
            
         return self.busList[row]
     }
