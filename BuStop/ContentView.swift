@@ -14,11 +14,12 @@ struct ContentView: View {
     @State var isLoading: Bool = true
     @ObservedObject var busStop : BusStopInfo
     @State var busStopList: [String]?
+    @State var checkDest: CheckDest
     
     var body: some View {
         
-//        ZStack {
-//            // Start Screen
+//       ZStack {
+////            // Start Screen
 //            if isLoading {
 //                launchScreenView
 //                    .transition(.opacity)
@@ -31,67 +32,80 @@ struct ContentView: View {
 //        }
         
         NavigationView {
-            ZStack {
-                Color(red: 213/255, green: 223/255, blue: 240/255).ignoresSafeArea()
+            ZStack{
                 ZStack {
-                    VStack {
-                        ZStack {
-                            Text("현재 위치의 주변 정류장입니다. \n 탑승하실 곳을 선택하세요.")
-                                .font(.title3)
-                                .multilineTextAlignment(.center)
-                                .padding(.leading, 50.0)
-                                .padding(.top, 20.0)
-                            Spacer()
-                            HStack {
-                                Image("CurrentStop")
-                                    .resizable()
-                                    .frame(width: 80, height: 80)
-                                Spacer()
-                            }
-                            .padding(.top, 10.0)
-                            .padding(.leading, 10.0)
-
-                        }
-                        Spacer()
-                    }
-
+                    Color(red: 213/255, green: 223/255, blue: 240/255).ignoresSafeArea()
                     ZStack {
-                        RoundedRectangle(cornerRadius: 35.0)
-                            .padding(.top, 100.0)
-                            .padding(.horizontal, 20.0)
-                            .foregroundColor(.white)
-                        ZStack {
-                            ScrollView(.vertical, showsIndicators: false, content: {
-                                VStack (alignment: .leading){
-                                    ForEach(busStopList!, id:\.self, content: { item in
-                                        NavigationLink(destination: SelectBusView(busStop: busStop, busStopName: item))  {
-                                            BusStopListItemView(busStopName: item)
-                                        }
-                                    })
+                        VStack {
+                            ZStack {
+                                Text("현재 위치의 주변 정류장입니다. \n 탑승하실 곳을 선택하세요.")
+                                    .font(.title3)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.leading, 50.0)
+                                    .padding(.top, 20.0)
+                                Spacer()
+                                HStack {
+                                    Image("CurrentStop")
+                                        .resizable()
+                                        .frame(width: 80, height: 80)
+                                    Spacer()
                                 }
-                            })
-                            .frame(width: 300, height: 550, alignment: .leading)
-                            .padding(.top, 90.0)
-                            .padding(.horizontal, 20.0)
+                                .padding(.top, 10.0)
+                                .padding(.leading, 10.0)
+
+                            }
+                            Spacer()
+                        }
+
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 35.0)
+                                .padding(.top, 100.0)
+                                .padding(.horizontal, 20.0)
+                                .foregroundColor(.white)
+                            ZStack {
+                                ScrollView(.vertical, showsIndicators: false, content: {
+                                    VStack (alignment: .leading){
+                                        ForEach(busStopList!, id:\.self, content: { item in
+                                            NavigationLink(destination: SelectBusView(busStop: busStop, busStopName: item, checkDest: checkDest))  {
+                                                BusStopListItemView(busStopName: item)
+                                            }
+                                        })
+                                    }
+                                })
+                                .frame(width: 300, height: 550, alignment: .leading)
+                                .padding(.top, 90.0)
+                                .padding(.horizontal, 20.0)
+                            }
                         }
                     }
                 }
-            }
-            .navigationBarTitle("", displayMode: .inline)
-            .toolbar{
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {busStopList = busStop.FindBusStop(200)}) {
-                        Image(systemName: "arrow.counterclockwise")
+                .navigationBarTitle("", displayMode: .inline)
+                .navigationBarHidden(isLoading)
+                .toolbar{
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {busStopList = busStop.FindBusStop(200)}) {
+                            Image(systemName: "arrow.counterclockwise")
+                        }
+                        .padding(.trailing, 15)
                     }
-                    .padding(.trailing, 15)
+                }
+                if isLoading {
+                    ZStack (alignment: .center) {
+                        Color(.white).edgesIgnoringSafeArea(.all)
+                        Image("LaunchIcon")
+                    }
+                    .frame(height: UIScreen.main.bounds.height)
+                    .transition(.move(edge: .top))
                 }
             }
-//            .navigationBarHidden(true)
-//            .onAppear {
-//                self.isNavigationBarHidden = true
-//            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                    isLoading = false
+                })
+            }
         }
     }
+
 }
 
 //MARK: - Select Bus
@@ -99,6 +113,7 @@ struct SelectBusView: View {
     //@Binding var isNavigationBarHidden: Bool
     var busStop: BusStopInfo
     var busStopName: String
+    var checkDest: CheckDest
     
     var body: some View {
         
@@ -129,7 +144,7 @@ struct SelectBusView: View {
                         ScrollView(.vertical, showsIndicators: false, content: {
                             LazyVGrid(columns:[GridItem(.adaptive(minimum: 100))]) {
                                 ForEach(busStop.returnBusNum(of: busStopName), id:\.self, content: { item in
-                                    NavigationLink(destination: GoalView()) {
+                                    NavigationLink(destination: GoalView(checkDest: checkDest,busNum: item, busStopInfo: busStop)) {
                                         BusListItemView(busName: item)
                                             .aspectRatio(3/2, contentMode: .fit)
                                     }
@@ -153,14 +168,16 @@ struct SelectBusView: View {
 //MARK: - Select Goal
 struct GoalView: View {
     //@Binding var isNavigationBarHidden: Bool
-    
-    var busGoalList : [String] = ["복현우체국","복현오거리1","333","444","555","8","8","8","8","8"]
+    @ObservedObject private var notiManager = NotificationManager()
+    var checkDest : CheckDest
+    var busNum : String
+    var busStopInfo : BusStopInfo
     var body: some View {
         ZStack {
             Color(red: 213/255, green: 223/255, blue: 240/255).ignoresSafeArea()
             ZStack {
                 VStack {
-                    Text("선택하신 버스는\n() 입니다. \n 목적지를 선택하세요.")
+                    Text("선택하신 버스는\n\(busNum) 입니다. \n 목적지를 선택하세요.")
                         .font(.title2)
                         .multilineTextAlignment(.center)
                         //.padding(.top, 18.0)
@@ -175,8 +192,14 @@ struct GoalView: View {
                     HStack {
                         ScrollView(.vertical, showsIndicators: false, content: {
                             VStack (alignment: .leading) {
-                                ForEach(busGoalList, id:\.self, content: { item in
-                                    BusGoalItemView(busGoalName: item)
+                                ForEach(checkDest.FindDest(of: busNum)!, id:\.self, content: { item in
+                                    NavigationLink(destination: GoingView()) {
+                                        BusGoalItemView(busGoalName: item)
+                                    }
+                                    .simultaneousGesture(TapGesture().onEnded{
+                                        notiManager.requestNotificationAuthorization()
+                                        notiManager.sendNotification(busStopInfo: busStopInfo, place: item)
+                                    })
                                 })
                             }
                         })
@@ -191,19 +214,59 @@ struct GoalView: View {
     }
 }
 
+struct GoingView: View {
+    var body: some View {
+        ZStack {
+            Color(red: 213/255, green: 223/255, blue: 240/255).ignoresSafeArea()
+            ZStack {
+                VStack {
+                    Text("버스로 이동 중")
+                        .font(.title)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 50.0)
+                    Spacer()
+                }
+                
+                VStack {
+                    ZStack {
+                        Circle()
+                            .foregroundColor(.white)
+                            .frame(width: 300, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        Image("arriveBus")
+                    }
+                    Text("목적지 전 정류장에 도착하면\n알려드릴게요!\n앱을 종료하지 마세요.")
+                        .multilineTextAlignment(.center)
+                        .frame(alignment: .center)
+                        .font(.title2)
+                        .padding(.top, 30.0)
+                }
+            }
+        }
+        .navigationBarTitle("", displayMode: .inline)
+        //.navigationBarHidden(true)
+    }
+}
+
 //MARK: - ETC
 
-//extension StartView {
-//    var launchScreenView: some View {
-//        ZStack (alignment: .center) {
-//            Color(.white).edgesIgnoringSafeArea(.all)
-//
-//            Image("LaunchIcon")
-//        }
-//
-//
-//    }
-//}
+extension ContentView {
+    var launchScreenView: some View {
+        ZStack (alignment: .center) {
+            Color(.white).edgesIgnoringSafeArea(.all)
+
+            Image("LaunchIcon")
+        }
+    }
+}
+
+struct openingView: View {
+    var body: some View {
+        ZStack (alignment: .center) {
+            Color(.white).edgesIgnoringSafeArea(.all)
+            Image("LaunchIcon")
+        }
+    }
+}
 
 struct BusStopListItemView: View {
     var busStopName: String
@@ -215,7 +278,7 @@ struct BusStopListItemView: View {
                 .resizable()
                 .frame(width: 50, height: 50)
             Text(busStopName)
-                .font(.largeTitle)
+                .font(.system(size: 30))
         }
     }
 }
@@ -243,7 +306,7 @@ struct BusGoalItemView: View {
                 .foregroundColor(Color(red: 213/255, green: 223/255, blue: 240/255))
                 .frame(width:20, height: 50)
             Text(busGoalName)
-                .font(.title)
+                .font(.system(size: 30))
         }
     }
 }
@@ -251,9 +314,11 @@ struct BusGoalItemView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            var busStop = BusStopInfo(filePath: "/Users/hwistarrrrr/Desktop/11.txt")
-            var busStopList: [String]? = busStop.FindBusStop(200)
-            ContentView(busStop: busStop, busStopList: busStopList)
+//            var busStop = BusStopInfo(filePath: "/Users/hwistarrrrr/Desktop/11.txt")
+//            var busStopList: [String]? = busStop.FindBusStop(200)
+//            var checkDest = CheckDest()
+//            ContentView(busStop: busStop, busStopList: busStopList, checkDest: checkDest)
+            openingView()
         }
     }
 }

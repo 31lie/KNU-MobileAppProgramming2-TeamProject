@@ -16,6 +16,8 @@
 		4492EC462843D1C90009028A /* BusInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4492EC452843D1C90009028A /* BusInfo.swift */; };
 		44FCEF9F283D5E91007E372A /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FCEF9E283D5E91007E372A /* LocationInfo.swift */; };
 		44FCEFA1283D618F007E372A /* RouteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FCEFA0283D618F007E372A /* RouteInfo.swift */; };
+		665A4ECF285083830075E1EE /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A4ECE285083830075E1EE /* NotificationManager.swift */; };
+		665A4ED12850C61D0075E1EE /* CheckDest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A4ED02850C61D0075E1EE /* CheckDest.swift */; };
 		D7362DF3EF03499DE8C7CCA1 /* Pods_BuStop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25917CE20E5A8E57FD0F5FC3 /* Pods_BuStop.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +34,8 @@
 		4492EC452843D1C90009028A /* BusInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusInfo.swift; sourceTree = "<group>"; };
 		44FCEF9E283D5E91007E372A /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		44FCEFA0283D618F007E372A /* RouteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInfo.swift; sourceTree = "<group>"; };
+		665A4ECE285083830075E1EE /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		665A4ED02850C61D0075E1EE /* CheckDest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckDest.swift; sourceTree = "<group>"; };
 		7353F8A2FD76C9B85BADC9AB /* Pods-BuStop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuStop.debug.xcconfig"; path = "Target Support Files/Pods-BuStop/Pods-BuStop.debug.xcconfig"; sourceTree = "<group>"; };
 		D212D166EBCAD6E58DC3D80F /* Pods-BuStop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BuStop.release.xcconfig"; path = "Target Support Files/Pods-BuStop/Pods-BuStop.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +78,8 @@
 				44FCEF9E283D5E91007E372A /* LocationInfo.swift */,
 				0DDCB4BC28277DFA008D3B2F /* BuStopApp.swift */,
 				0DDCB4BE28277DFA008D3B2F /* ContentView.swift */,
+				665A4ED02850C61D0075E1EE /* CheckDest.swift */,
+				665A4ECE285083830075E1EE /* NotificationManager.swift */,
 				4492EC452843D1C90009028A /* BusInfo.swift */,
 				448B213E2843F795000C3445 /* SetDest.swift */,
 				0DDCB4C028277DFC008D3B2F /* Assets.xcassets */,
@@ -224,8 +230,10 @@
 				0DDCB4BF28277DFA008D3B2F /* ContentView.swift in Sources */,
 				44FCEFA1283D618F007E372A /* RouteInfo.swift in Sources */,
 				445D36062849DBE500FF2BC7 /* BusStopInfo.swift in Sources */,
+				665A4ECF285083830075E1EE /* NotificationManager.swift in Sources */,
 				448B213F2843F795000C3445 /* SetDest.swift in Sources */,
 				44FCEF9F283D5E91007E372A /* LocationInfo.swift in Sources */,
+				665A4ED12850C61D0075E1EE /* CheckDest.swift in Sources */,
 				4492EC462843D1C90009028A /* BusInfo.swift in Sources */,
 				0DDCB4BD28277DFA008D3B2F /* BuStopApp.swift in Sources */,
 			);
